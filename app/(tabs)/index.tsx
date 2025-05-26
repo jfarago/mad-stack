@@ -40,9 +40,11 @@ export default function SleepSoundsScreen() {
   // Sync volume to player
   useEffect(() => {
     rainPlayer.volume = rainVolume;
+    rainPlayer.loop = true;
   }, [rainVolume, rainPlayer]);
   useEffect(() => {
     oceanPlayer.volume = oceanVolume;
+    oceanPlayer.loop = true;
   }, [oceanVolume, oceanPlayer]);
 
   // Play/pause handlers
