@@ -223,17 +223,23 @@ export default function SleepSoundsScreen() {
     });
   };
 
-  // When rain sound changes, stop current and reset play state
+  // When rain sound changes, keep play state
   useEffect(() => {
-    rainPlayer.pause();
-    setIsRainPlaying(false);
-  }, [selectedRain, rainPlayer]);
+    if (isRainPlaying) {
+      rainPlayer.play();
+    } else {
+      rainPlayer.pause();
+    }
+  }, [selectedRain, rainPlayer, isRainPlaying]);
 
-  // When ocean sound changes, stop current and reset play state
+  // When ocean sound changes, keep play state
   useEffect(() => {
-    oceanPlayer.pause();
-    setIsOceanPlaying(false);
-  }, [selectedOcean, oceanPlayer]);
+    if (isOceanPlaying) {
+      oceanPlayer.play();
+    } else {
+      oceanPlayer.pause();
+    }
+  }, [selectedOcean, oceanPlayer, isOceanPlaying]);
 
   useEffect(() => {
     setAudioModeAsync({
