@@ -10,8 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mad-scientist.MadStack",
-      "appleTeamId": "W2PFN93ZXQ"
+      "bundleIdentifier": "com.madscientist.MadStack",
+      "appleTeamId": "W2PFN93ZXQ",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -40,6 +43,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3a926fbd-d708-462e-9a5d-42f7d1037658"
+      }
+    },
+    "owner": "mad_scientist"
   }
 }
