@@ -11,19 +11,19 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const soundOptions = [
   {
     id: 'campfire-1',
-    name: 'Campfire 1',
+    name: 'Campfire',
     file: require('../../assets/sounds/sound_jay/campfire-1.mp3'),
     defaultVolume: 0.5,
   },
   {
     id: 'wind-gust-02',
-    name: 'Wind Gust 02',
+    name: 'Wind Gust',
     file: require('../../assets/sounds/sound_jay/wind-gust-02.mp3'),
     defaultVolume: 0.5,
   },
   {
     id: 'windy-forest-ambience-01',
-    name: 'Windy Forest Ambience 01',
+    name: 'Windy Forest',
     file: require('../../assets/sounds/sound_jay/windy-forest-ambience-01.mp3'),
     defaultVolume: 0.5,
   },
@@ -33,22 +33,22 @@ const soundOptions = [
 const rainSounds = [
   {
     id: 'rain-01',
-    name: 'Rain 01',
+    name: 'Rain 1',
     file: require('../../assets/sounds/sound_jay/rain-01.mp3'),
   },
   {
     id: 'rain-02',
-    name: 'Rain 02',
+    name: 'Rain 2',
     file: require('../../assets/sounds/sound_jay/rain-02.mp3'),
   },
   {
     id: 'rain-03',
-    name: 'Rain 03',
+    name: 'Rain 3',
     file: require('../../assets/sounds/sound_jay/rain-03.mp3'),
   },
   {
     id: 'rain-06',
-    name: 'Rain 06',
+    name: 'Rain 4',
     file: require('../../assets/sounds/sound_jay/rain-06.mp3'),
   },
 ];
@@ -57,17 +57,17 @@ const rainSounds = [
 const oceanSounds = [
   {
     id: 'ocean-wave-1',
-    name: 'Ocean Wave 1',
+    name: 'Ocean 1',
     file: require('../../assets/sounds/sound_jay/ocean-wave-1.mp3'),
   },
   {
     id: 'ocean-wave-2',
-    name: 'Ocean Wave 2',
+    name: 'Ocean 2',
     file: require('../../assets/sounds/sound_jay/ocean-wave-2.mp3'),
   },
   {
     id: 'ocean-waves-1',
-    name: 'Ocean Waves 1',
+    name: 'Ocean 3',
     file: require('../../assets/sounds/sound_jay/ocean-waves-1.mp3'),
   },
 ];
@@ -267,85 +267,93 @@ export default function SleepSoundsScreen() {
             Sleep Sounds
           </ThemedText>
         </ThemedView>
+        {/* Rain player with menu */}
+        <ThemedView style={styles.groupedRow}>
+          <ThemedText style={styles.soundLabel}>Rain</ThemedText>
+          <Slider
+            style={styles.slider}
+            value={rainVolume}
+            onValueChange={setRainVolume}
+            minimumValue={0}
+            maximumValue={1}
+            step={0.01}
+            minimumTrackTintColor="#4f8cff"
+            thumbTintColor="#4f8cff"
+          />
+          <TouchableOpacity
+            onPress={handleRainPlayPause}
+            style={[styles.button, isRainPlaying && styles.buttonActive]}
+          >
+            <ThemedText style={styles.buttonText}>{isRainPlaying ? 'Stop' : 'Play'}</ThemedText>
+          </TouchableOpacity>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.menuScroll}>
+            {rainSounds.map((rain) => (
+              <TouchableOpacity
+                key={rain.id}
+                style={[
+                  styles.menuButton,
+                  selectedRain.id === rain.id && styles.menuButtonSelected,
+                ]}
+                onPress={() => setSelectedRain(rain)}
+                disabled={selectedRain.id === rain.id}
+              >
+                <ThemedText
+                  style={[
+                    styles.menuButtonText,
+                    selectedRain.id === rain.id && styles.menuButtonTextSelected,
+                  ]}
+                >
+                  {rain.name}
+                </ThemedText>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </ThemedView>
+        {/* Ocean player with menu */}
+        <ThemedView style={styles.groupedRow}>
+          <ThemedText style={styles.soundLabel}>Ocean Waves</ThemedText>
+          <Slider
+            style={styles.slider}
+            value={oceanVolume}
+            onValueChange={setOceanVolume}
+            minimumValue={0}
+            maximumValue={1}
+            step={0.01}
+            minimumTrackTintColor="#4f8cff"
+            thumbTintColor="#4f8cff"
+          />
+          <TouchableOpacity
+            onPress={handleOceanPlayPause}
+            style={[styles.button, isOceanPlaying && styles.buttonActive]}
+          >
+            <ThemedText style={styles.buttonText}>{isOceanPlaying ? 'Stop' : 'Play'}</ThemedText>
+          </TouchableOpacity>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.menuScroll}>
+            {oceanSounds.map((ocean) => (
+              <TouchableOpacity
+                key={ocean.id}
+                style={[
+                  styles.menuButton,
+                  selectedOcean.id === ocean.id && styles.menuButtonSelected,
+                ]}
+                onPress={() => setSelectedOcean(ocean)}
+                disabled={selectedOcean.id === ocean.id}
+              >
+                <ThemedText
+                  style={[
+                    styles.menuButtonText,
+                    selectedOcean.id === ocean.id && styles.menuButtonTextSelected,
+                  ]}
+                >
+                  {ocean.name}
+                </ThemedText>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </ThemedView>
         <ThemedView>
-          {/* Rain player with menu */}
-          <ThemedView style={styles.soundRow}>
-            <ThemedText style={styles.soundLabel}>Rain</ThemedText>
-            <Slider
-              style={styles.slider}
-              value={rainVolume}
-              onValueChange={setRainVolume}
-              minimumValue={0}
-              maximumValue={1}
-              step={0.01}
-            />
-            <TouchableOpacity onPress={handleRainPlayPause} style={styles.button}>
-              <ThemedText style={styles.buttonText}>{isRainPlaying ? 'Pause' : 'Play'}</ThemedText>
-            </TouchableOpacity>
-            <ThemedText style={{ color: '#aaa', marginTop: 8 }}>Rain Sound:</ThemedText>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 8 }}>
-              {rainSounds.map((rain) => (
-                <TouchableOpacity
-                  key={rain.id}
-                  style={[
-                    styles.menuButton,
-                    selectedRain.id === rain.id && styles.menuButtonSelected,
-                  ]}
-                  onPress={() => setSelectedRain(rain)}
-                  disabled={selectedRain.id === rain.id}
-                >
-                  <ThemedText
-                    style={[
-                      styles.menuButtonText,
-                      selectedRain.id === rain.id && styles.menuButtonTextSelected,
-                    ]}
-                  >
-                    {rain.name}
-                  </ThemedText>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </ThemedView>
-          {/* Ocean player with menu */}
-          <ThemedView style={styles.soundRow}>
-            <ThemedText style={styles.soundLabel}>Ocean Waves</ThemedText>
-            <Slider
-              style={styles.slider}
-              value={oceanVolume}
-              onValueChange={setOceanVolume}
-              minimumValue={0}
-              maximumValue={1}
-              step={0.01}
-            />
-            <TouchableOpacity onPress={handleOceanPlayPause} style={styles.button}>
-              <ThemedText style={styles.buttonText}>{isOceanPlaying ? 'Pause' : 'Play'}</ThemedText>
-            </TouchableOpacity>
-            <ThemedText style={{ color: '#aaa', marginTop: 8 }}>Ocean Sound:</ThemedText>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 8 }}>
-              {oceanSounds.map((ocean) => (
-                <TouchableOpacity
-                  key={ocean.id}
-                  style={[
-                    styles.menuButton,
-                    selectedOcean.id === ocean.id && styles.menuButtonSelected,
-                  ]}
-                  onPress={() => setSelectedOcean(ocean)}
-                  disabled={selectedOcean.id === ocean.id}
-                >
-                  <ThemedText
-                    style={[
-                      styles.menuButtonText,
-                      selectedOcean.id === ocean.id && styles.menuButtonTextSelected,
-                    ]}
-                  >
-                    {ocean.name}
-                  </ThemedText>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </ThemedView>
           {soundOptions.map((opt, i) => (
-            <ThemedView style={styles.soundRow} key={opt.id}>
+            <ThemedView style={styles.groupedRow} key={opt.id}>
               <ThemedText style={styles.soundLabel}>{opt.name}</ThemedText>
               <Slider
                 style={styles.slider}
@@ -354,11 +362,14 @@ export default function SleepSoundsScreen() {
                 minimumValue={0}
                 maximumValue={1}
                 step={0.01}
+                minimumTrackTintColor="#4f8cff"
+                thumbTintColor="#4f8cff"
               />
-              <TouchableOpacity onPress={() => handlePlayPause(i)} style={styles.button}>
-                <ThemedText style={styles.buttonText}>
-                  {playStates[i] ? 'Pause' : 'Play'}
-                </ThemedText>
+              <TouchableOpacity
+                onPress={() => handlePlayPause(i)}
+                style={[styles.button, playStates[i] && styles.buttonActive]}
+              >
+                <ThemedText style={styles.buttonText}>{playStates[i] ? 'Stop' : 'Play'}</ThemedText>
               </TouchableOpacity>
             </ThemedView>
           ))}
@@ -382,27 +393,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
+    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 32,
     fontWeight: 'bold',
   },
-  soundRow: {
-    marginBottom: 30,
-  },
-  soundLabel: {
-    color: '#fff',
-    marginBottom: 10,
-    fontSize: 16,
-  },
   slider: {
     width: '100%',
   },
   button: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: '#1E90FF',
-    borderRadius: 5,
+    width: '100%',
+    marginTop: 12,
+    marginBottom: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    backgroundColor: '#232b38',
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  buttonActive: {
+    backgroundColor: '#4f8cff',
   },
   buttonText: {
     color: '#fff',
@@ -430,5 +441,35 @@ const styles = StyleSheet.create({
   menuButtonTextSelected: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  groupSection: {
+    marginBottom: 16,
+  },
+  groupedRow: {
+    backgroundColor: '#1a2636',
+    borderRadius: 16,
+    padding: 16,
+    marginTop: 8,
+    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  soundLabel: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 8,
+  },
+  sectionTitle: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingLeft: 2,
+  },
+  menuScroll: {
+    marginTop: 8,
+    marginBottom: 0,
   },
 });
