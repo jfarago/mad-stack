@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useState } from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const COLORS = ['#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#6a4c93'];
@@ -28,19 +28,20 @@ const TIMERS = [
   },
 ];
 
-export default function CounterScreen() {
+export default function MilestoneTrackerScreen() {
   const insets = useSafeAreaInsets();
   const bottom = useBottomTabOverflow();
 
   return (
     <ThemedView>
-      <Animated.ScrollView
+      <ScrollView
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
         contentContainerStyle={[
           styles.scrollContent,
           { paddingTop: insets.top, paddingBottom: bottom },
         ]}
+        showsVerticalScrollIndicator={false}
       >
         <ThemedView style={styles.headerRow}>
           <ThemedText type="title" style={styles.headerTitle}>
@@ -52,7 +53,7 @@ export default function CounterScreen() {
             <TimerItem key={timer.id} timer={timer} />
           ))}
         </ThemedView>
-      </Animated.ScrollView>
+      </ScrollView>
     </ThemedView>
   );
 }
