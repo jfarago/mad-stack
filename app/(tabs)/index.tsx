@@ -17,7 +17,7 @@ const soundOptions = [
   },
   {
     id: 'wind-gust-02',
-    name: 'Wind Gust',
+    name: 'Wind',
     file: require('../../assets/sounds/sound_jay/wind-gust-02.mp3'),
     defaultVolume: 0.5,
   },

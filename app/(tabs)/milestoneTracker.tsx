@@ -28,7 +28,7 @@ const TIMERS = [
   },
 ];
 
-export default function CounterScreen() {
+export default function MilestoneTrackerScreen() {
   const insets = useSafeAreaInsets();
   const bottom = useBottomTabOverflow();
 

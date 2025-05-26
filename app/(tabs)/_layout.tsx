@@ -35,9 +35,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="counter"
+        name="milestoneTracker"
         options={{
-          title: 'Counter',
+          title: 'Milestone Tracker',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,
         }}
       />
