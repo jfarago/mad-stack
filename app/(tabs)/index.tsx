@@ -380,11 +380,6 @@ export default function SleepSoundsScreen() {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: 'bold',
-  },
   scrollContent: {
     paddingHorizontal: 16,
   },
