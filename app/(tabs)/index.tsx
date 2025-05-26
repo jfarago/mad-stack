@@ -4,7 +4,7 @@ import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import Slider from '@react-native-community/slider';
 import { setAudioModeAsync, useAudioPlayer } from 'expo-audio';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const soundOptions = [
@@ -77,49 +77,73 @@ export default function SleepSoundsScreen() {
 
   return (
     <ThemedView>
-      <ThemedText style={styles.title}>Sleep Sounds</ThemedText>
-      <ThemedView style={styles.soundRow}>
-        <ThemedText style={styles.soundLabel}>{soundOptions[0].name}</ThemedText>
-        <Slider
-          style={styles.slider}
-          value={rainVolume}
-          onValueChange={setRainVolume}
-          minimumValue={0}
-          maximumValue={1}
-          step={0.01}
-        />
-        <TouchableOpacity onPress={handleRainPlayPause} style={styles.button}>
-          <ThemedText style={styles.buttonText}>{isRainPlaying ? 'Pause' : 'Play'}</ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
-      <ThemedView style={styles.soundRow}>
-        <ThemedText style={styles.soundLabel}>{soundOptions[1].name}</ThemedText>
-        <Slider
-          style={styles.slider}
-          value={oceanVolume}
-          onValueChange={setOceanVolume}
-          minimumValue={0}
-          maximumValue={1}
-          step={0.01}
-        />
-        <TouchableOpacity onPress={handleOceanPlayPause} style={styles.button}>
-          <ThemedText style={styles.buttonText}>{isOceanPlaying ? 'Pause' : 'Play'}</ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
+      <ScrollView
+        scrollEventThrottle={16}
+        scrollIndicatorInsets={{ bottom }}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingTop: insets.top, paddingBottom: bottom },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <ThemedView style={styles.headerRow}>
+          <ThemedText type="title" style={styles.headerTitle}>
+            Sleep Sounds
+          </ThemedText>
+        </ThemedView>
+        <ThemedView>
+          <ThemedView style={styles.soundRow}>
+            <ThemedText style={styles.soundLabel}>{soundOptions[0].name}</ThemedText>
+            <Slider
+              style={styles.slider}
+              value={rainVolume}
+              onValueChange={setRainVolume}
+              minimumValue={0}
+              maximumValue={1}
+              step={0.01}
+            />
+            <TouchableOpacity onPress={handleRainPlayPause} style={styles.button}>
+              <ThemedText style={styles.buttonText}>{isRainPlaying ? 'Pause' : 'Play'}</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+          <ThemedView style={styles.soundRow}>
+            <ThemedText style={styles.soundLabel}>{soundOptions[1].name}</ThemedText>
+            <Slider
+              style={styles.slider}
+              value={oceanVolume}
+              onValueChange={setOceanVolume}
+              minimumValue={0}
+              maximumValue={1}
+              step={0.01}
+            />
+            <TouchableOpacity onPress={handleOceanPlayPause} style={styles.button}>
+              <ThemedText style={styles.buttonText}>{isOceanPlaying ? 'Pause' : 'Play'}</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+        </ThemedView>
+      </ScrollView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: 'bold',
+  },
   scrollContent: {
     paddingHorizontal: 16,
-    flex: 1,
   },
-  title: {
-    fontSize: 24,
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  headerTitle: {
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
   },
   soundRow: {
     marginBottom: 30,
